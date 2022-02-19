@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import Alert from "@mui/material/Alert";
 import EnterLocationForm from "./EnterLocationForm";
 
 const WEATHER_API_URL = "http://api.openweathermap.org/data/2.5";
@@ -10,6 +11,7 @@ const API_KEY = "6a175ae0557a7f1a5308f4eaf4f1063f";
 
 function WeatherApp() {
   const [location, setLocation] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const formSubmitFn = (e, location) => {
     e.preventDefault();
     setLocation(location);
@@ -20,6 +22,9 @@ function WeatherApp() {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <EnterLocationForm submitFn={formSubmitFn} />
+        </Grid>
+        <Grid item xs={12}>
+          {showAlert && <Alert severity="error">Enter a valid city name</Alert>}
         </Grid>
         <Grid item xs={12} md={6}>
           <Card variant="outlined">2</Card>
