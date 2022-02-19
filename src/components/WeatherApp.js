@@ -10,12 +10,16 @@ const API_KEY = "6a175ae0557a7f1a5308f4eaf4f1063f";
 
 function WeatherApp() {
   const [location, setLocation] = useState();
+  const formSubmitFn = (e, location) => {
+    e.preventDefault();
+    setLocation(location);
+  };
   return (
     <Container maxWidth="md">
       {console.log(location)}
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <EnterLocationForm />
+          <EnterLocationForm submitFn={formSubmitFn} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Card variant="outlined">2</Card>
