@@ -12,13 +12,42 @@ const API_KEY = "6a175ae0557a7f1a5308f4eaf4f1063f";
 function WeatherApp() {
   const [location, setLocation] = useState();
   const [showAlert, setShowAlert] = useState(false);
+  const [coords, setCoords] = useState();
+
   const formSubmitFn = (e, location) => {
     e.preventDefault();
     setLocation(location);
   };
+
+  useEffect(() => {
+    !location
+      ? // Get the user's current coordinates
+        navigator.geolocation.getCurrentPosition((position) => {
+          if (position && position.coords) {
+            setCoords(position.coords);
+          }
+        })
+      : // Fetch coordinates of the city entered by the user
+        fetch(`${GEO_API_URL}${location}&limit=1&appid=${API_KEY}`)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error();
+            }
+            setShowAlert(false);
+            return res.json();
+          })
+          .then((result) =>
+            setCoords({ latitude: result[0].lat, longitude: result[0].lon })
+          )
+          .catch((error) => {
+            setShowAlert(true);
+            console.log(error);
+          });
+  }, [location]);
+
   return (
     <Container maxWidth="md">
-      {console.log(location)}
+      {console.log(coords)}
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <EnterLocationForm submitFn={formSubmitFn} />
