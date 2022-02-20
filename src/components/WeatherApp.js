@@ -6,8 +6,8 @@ import Alert from "@mui/material/Alert";
 import EnterLocationForm from "./EnterLocationForm";
 import WeatherCard from "./WeatherCard";
 
-const WEATHER_API_URL = "http://api.openweathermap.org/data/2.5";
-const GEO_API_URL = "http://api.openweathermap.org/geo/1.0/direct?q=";
+const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5";
+const GEO_API_URL = "https://api.openweathermap.org/geo/1.0/direct?q=";
 const API_KEY = "6a175ae0557a7f1a5308f4eaf4f1063f";
 
 function WeatherApp() {
