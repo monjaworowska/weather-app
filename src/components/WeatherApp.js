@@ -80,19 +80,23 @@ function WeatherApp() {
         <Grid item xs={12}>
           {showAlert && <Alert severity="error">Enter a valid city name</Alert>}
         </Grid>
-        <Grid item xs={12} md={6}>
-          <WeatherCard />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card variant="outlined">map</Card>
-        </Grid>
-        <Grid container item spacing={3}>
-          {weatherForecast.map((forecast) => (
-            <Grid item xs={12} md={3}>
-              <WeatherCard />
+        {todayWeather && weatherForecast && (
+          <>
+            <Grid item xs={12} md={6}>
+              <WeatherCard {...todayWeather} />
             </Grid>
-          ))}
-        </Grid>
+            <Grid item xs={12} md={6}>
+              <Card variant="outlined">map</Card>
+            </Grid>
+            <Grid container item spacing={3}>
+              {weatherForecast.map((forecast, i) => (
+                <Grid item xs={12} md={3} key={forecast.dt}>
+                  <WeatherCard {...forecast} i={i + 1} />
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        )}
       </Grid>
     </Container>
   );
