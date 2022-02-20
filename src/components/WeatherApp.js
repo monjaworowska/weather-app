@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Alert from "@mui/material/Alert";
 import EnterLocationForm from "./EnterLocationForm";
+import WeatherCard from "./WeatherCard";
 
 const WEATHER_API_URL = "http://api.openweathermap.org/data/2.5";
 const GEO_API_URL = "http://api.openweathermap.org/geo/1.0/direct?q=";
@@ -72,8 +73,6 @@ function WeatherApp() {
 
   return (
     <Container maxWidth="md">
-      {console.log(todayWeather)}
-      {console.log(weatherForecast)}
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <EnterLocationForm submitFn={formSubmitFn} />
@@ -82,24 +81,17 @@ function WeatherApp() {
           {showAlert && <Alert severity="error">Enter a valid city name</Alert>}
         </Grid>
         <Grid item xs={12} md={6}>
-          <Card variant="outlined">2</Card>
+          <WeatherCard />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Card variant="outlined">3</Card>
+          <Card variant="outlined">map</Card>
         </Grid>
         <Grid container item spacing={3}>
-          <Grid item xs={12} md={3}>
-            <Card variant="outlined">4</Card>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Card variant="outlined">5</Card>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Card variant="outlined">6</Card>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Card variant="outlined">6</Card>
-          </Grid>
+          {weatherForecast.map((forecast) => (
+            <Grid item xs={12} md={3}>
+              <WeatherCard />
+            </Grid>
+          ))}
         </Grid>
       </Grid>
     </Container>
