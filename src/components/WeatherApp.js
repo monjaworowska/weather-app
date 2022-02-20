@@ -13,6 +13,8 @@ function WeatherApp() {
   const [location, setLocation] = useState();
   const [showAlert, setShowAlert] = useState(false);
   const [coords, setCoords] = useState();
+  const [todayWeather, setTodayWeather] = useState();
+  const [weatherForecast, setWeatherForecast] = useState();
 
   const formSubmitFn = (e, location) => {
     e.preventDefault();
@@ -45,9 +47,33 @@ function WeatherApp() {
           });
   }, [location]);
 
+  useEffect(() => {
+    if (!coords) {
+      return;
+    }
+    //Fetch today weather data
+    fetch(
+      `${WEATHER_API_URL}/weather?lat=${coords.latitude}&lon=${coords.longitude}&units=metric&APPID=${API_KEY}`
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setTodayWeather(result);
+      });
+
+    //Fetch weather forecast
+    fetch(
+      `${WEATHER_API_URL}/onecall?lat=${coords.latitude}&lon=${coords.longitude}&exclude=current,minutely,hourly,alerts&units=metric&APPID=${API_KEY}`
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setWeatherForecast(result.daily.slice(0, 4));
+      });
+  }, [coords]);
+
   return (
     <Container maxWidth="md">
-      {console.log(coords)}
+      {console.log(todayWeather)}
+      {console.log(weatherForecast)}
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <EnterLocationForm submitFn={formSubmitFn} />
