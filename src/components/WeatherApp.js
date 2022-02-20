@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import Alert from "@mui/material/Alert";
 import EnterLocationForm from "./EnterLocationForm";
 import WeatherCard from "./WeatherCard";
+import { Map, Marker } from "pigeon-maps";
 
 const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5";
 const GEO_API_URL = "https://api.openweathermap.org/geo/1.0/direct?q=";
@@ -86,7 +87,18 @@ function WeatherApp() {
               <WeatherCard {...todayWeather} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Card variant="outlined">map</Card>
+              <Card variant="outlined">
+                <Map
+                  height={300}
+                  center={[coords.latitude, coords.longitude]}
+                  defaultZoom={10}
+                >
+                  <Marker
+                    width={50}
+                    anchor={[coords.latitude, coords.longitude]}
+                  />
+                </Map>
+              </Card>
             </Grid>
             <Grid container item spacing={3}>
               {weatherForecast.map((forecast, i) => (
